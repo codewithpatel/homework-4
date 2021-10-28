@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>NJIT Registration System</title>
+</head>
+<body>
+	<h1>Welcome to course registration site of NJIT</h1>
+	<hr>
+	<p>
+		<input type="radio" id="courseSearch" name="actions"
+			value="courseSearch" onclick="displayCourseSearch()">   <label
+			for="courseSearch">Course search</label>
+	</p>
+	<p>
+		<input type="radio" id="courseRegistration" name="actions"
+			value="courseRegistration" onclick="displayCourseRegistration()">
+		  <label for="courseRegistration">Course registration</label>
+	</p>
+
+	<br>
+
+	<div id="courseSearchForm" style="display: none;">
+		<form action="CourseSearchServlet" method="post">
+		<strong><label>Course Search: </label> </strong><br><br>
+			<label for="semester">Select Semester: </label> <select name="semester" id="semester">
+				<option value="Fall2021">Fall 2021</option>
+				<option value="Spring2022">Spring 2022</option>
+			</select> <br> <br> <input type="submit" value="Submit">
+		</form>
+	</div>
+
+	<div id="courseRegistrationForm" style="display: none;">
+		<form action="CourseRegistrationServlet" method="post">
+			<strong><label>Course Registration: </label> </strong><br><br>
+			<label>Course ID: </label>
+			<input type="text" name="CourseID"/> 
+			<br>
+			<br>
+			<label>Semester: </label>
+			<input type="text" name="Semester"/> 
+			<br><br>
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+
+
+
+	<script>
+		function displayCourseSearch() {
+			var selected = document.getElementsByName('actions');
+			console.log(selected[0].value);
+			document.getElementById('courseRegistrationForm').style.display = 'none';
+			document.getElementById('courseSearchForm').style.display = 'block';
+		}
+
+		function displayCourseRegistration() {
+			var selected = document.getElementsByName('actions');
+			console.log(selected[1].value);
+			document.getElementById('courseSearchForm').style.display = 'none';
+			document.getElementById('courseRegistrationForm').style.display = 'block';
+		}
+	</script>
+
+</body>
+</html>
