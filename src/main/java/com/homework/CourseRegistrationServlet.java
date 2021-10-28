@@ -31,17 +31,19 @@ public class CourseRegistrationServlet extends HttpServlet {
 			String sqlQuery = "select * from Courses where course_id = '"+courseID+"' and sem = '"+semester+"' ;";
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 			StringBuilder builder = new StringBuilder();
-			if(!rs.next()) {
+			boolean hasValue = false;
+			while (rs.next()) {
+				hasValue = true;
+				System.out.println("You are registered in " + rs.getString("course_name") + " for " + semester);
+				builder.append("You are registered in ");
+				builder.append(rs.getString("course_name"));
+				builder.append(" for ");
+				builder.append(rs.getString("sem"));
+			}
+			
+			if(!hasValue) {
 				System.out.println("The course is not offered");
-				builder.append("The course is not offered");
-			}else {
-				while (rs.next()) {
-					System.out.println("You are registered in " + rs.getString("course_name") + " for " + semester);
-					builder.append("You are registered in ");
-					builder.append(rs.getString("course_name"));
-					builder.append(" for ");
-					builder.append(rs.getString("sem"));
-				}
+				builder.append("<p style='color: red;'>The course is not offered</p>");
 			}
 			
 			PrintWriter writer = response.getWriter();

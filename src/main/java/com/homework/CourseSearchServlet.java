@@ -26,13 +26,20 @@ public class CourseSearchServlet extends HttpServlet {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/NJIT", "root", "password");
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from Courses where sem = '" + semester + "'");
+			String sql = "select * from Courses where sem = '"+semester+"' ";
+			ResultSet rs = stmt.executeQuery(sql);
 			StringBuilder builder = new StringBuilder();
+			boolean hasValue = false;
 			while (rs.next()) {
+				hasValue = true;
 				System.out.println(rs.getString(1) + "		" + rs.getString(2) + "		" + rs.getString(3));
 				builder.append(
 						"<p>" + rs.getString(1) + "		" + rs.getString(2) + "		" + rs.getString(3) + "<p>");
 
+			}
+			
+			if(!hasValue) {
+				builder.append("<p style='color: red;'>No Course Found</p>");
 			}
 			PrintWriter writer = response.getWriter();
 			writer.write("<!DOCTYPE html>\n"
